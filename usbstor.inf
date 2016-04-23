@@ -1,0 +1,158 @@
+[Version]
+Signature="$CHICAGO$"
+Class=USB
+ClassGUID={36FC9E60-C465-11CF-8056-444553540000}
+provider=%MSFT%
+LayoutFile=LAYOUT.INF
+DriverVer=12/09/1999,5.00.2195.1
+
+[ControlFlags]
+ExcludeFromSelect = *
+
+[Manufacturer]
+%MfgName%=Microsoft
+
+[Microsoft]
+%USB\VID_03EE&PID_0000.DeviceDesc%=USBSTOR_CBI,  USB\VID_03EE&PID_0000
+%USB\VID_03EE&PID_6901.DeviceDesc%=USBSTOR_CBI,  USB\VID_03EE&PID_6901
+%USB\VID_03F0&PID_0107.DeviceDesc%=USBSTOR_BULK, USB\VID_03F0&PID_0107
+%USB\VID_0409&PID_002C.DeviceDesc%=USBSTOR_BULK, USB\VID_0409&PID_002C
+%USB\VID_04E6&PID_0001.DeviceDesc%=USBSTOR_CB,   USB\VID_04E6&PID_0001
+%USB\VID_04E6&PID_0101.DeviceDesc%=USBSTOR_BULK, USB\VID_04E6&PID_0101
+%USB\VID_057B&PID_0000.DeviceDesc%=USBSTOR_CBI,  USB\VID_057B&PID_0000
+%USB\VID_059B&PID_0001.DeviceDesc%=USBSTOR_BULK, USB\VID_059B&PID_0001
+%USB\VID_059B&PID_0030.DeviceDesc%=USBSTOR_BULK, USB\VID_059B&PID_0030
+%USB\VID_059B&PID_0031.DeviceDesc%=USBSTOR_BULK, USB\VID_059B&PID_0031
+%USB\VID_059F&PID_A601.DeviceDesc%=USBSTOR_CB,   USB\VID_059F&PID_A601
+%USB\VID_0644&PID_0000.DeviceDesc%=USBSTOR_CBI,  USB\VID_0644&PID_0000
+%USB\VID_0693&PID_0002.DeviceDesc%=USBSTOR_BULK, USB\VID_0693&PID_0002
+%USB\VID_0693&PID_0003.DeviceDesc%=USBSTOR_BULK, USB\VID_0693&PID_0003
+%USB\VID_0718&PID_0002.DeviceDesc%=USBSTOR_BULK, USB\VID_0718&PID_0002
+%USB\VID_0781&PID_0001.DeviceDesc%=USBSTOR_CB,   USB\VID_0781&PID_0001
+
+%GenericBulkOnly.DeviceDesc%=USBSTOR_BULK, USB\Class_08&SubClass_02&Prot_50
+%GenericBulkOnly.DeviceDesc%=USBSTOR_BULK, USB\Class_08&SubClass_05&Prot_50
+%GenericBulkOnly.DeviceDesc%=USBSTOR_BULK, USB\Class_08&SubClass_06&Prot_50
+
+
+[PreCopySection]
+HKR,,NoSetupUI,,1
+
+[DestinationDirs]
+USBSTOR.CopyList = 10, system32\drivers
+NTMAP.CopyList = 10, system32\drivers
+
+; Windows 98+ Install Sections
+;
+[USBSTOR_CBI]
+CopyFiles=USBSTOR.CopyList, NTMAP.CopyList
+AddReg=USBSTOR.AddReg, USBSTOR_CBI.AddReg
+
+[USBSTOR_CB]
+CopyFiles=USBSTOR.CopyList, NTMAP.CopyList
+AddReg=USBSTOR.AddReg, USBSTOR_CB.AddReg
+
+[USBSTOR_BULK]
+CopyFiles=USBSTOR.CopyList, NTMAP.CopyList
+AddReg=USBSTOR.AddReg, USBSTOR_BULK.AddReg
+
+
+; Windows 2000 Install Sections
+;
+[USBSTOR_CBI.NT]
+CopyFiles=USBSTOR.CopyList
+AddReg=USBSTOR_CBI.AddReg
+
+[USBSTOR_CB.NT]
+CopyFiles=USBSTOR.CopyList
+AddReg=USBSTOR_CB.AddReg
+
+[USBSTOR_BULK.NT]
+CopyFiles=USBSTOR.CopyList
+AddReg=USBSTOR_BULK.AddReg
+
+
+; Windows 98+ Registry Section
+;
+[USBSTOR.AddReg]
+HKR,,DevLoader,,*NTKERN
+HKR,,NTMPDriver,,USBSTOR.SYS
+
+
+; Windows 98+ & Windows 2000 Registry Sections
+;
+[USBSTOR_CBI.AddReg]
+HKR,,DriverFlags,0x00010001,0x00000002
+
+[USBSTOR_CB.AddReg]
+HKR,,DriverFlags,0x00010001,0x00000003
+
+[USBSTOR_BULK.AddReg]
+HKR,,DriverFlags,0x00010001,0x00000001
+
+
+; Windows 98+ HW Install Sections
+;
+[USBSTOR_CBI.HW]
+AddReg=USBSTOR.HW.AddReg
+
+[USBSTOR_CB.HW]
+AddReg=USBSTOR.HW.AddReg
+
+[USBSTOR_BULK.HW]
+AddReg=USBSTOR.HW.AddReg
+
+[USBSTOR.HW.AddReg]
+HKR,,upperfilters,0,"NTMAP.SYS"
+
+
+; Windows 2000 Service Install Sections
+;
+[USBSTOR_CBI.NT.Services]
+Addservice = USBSTOR, 0x00000002, USBSTOR.AddService
+
+[USBSTOR_CB.NT.Services]
+Addservice = USBSTOR, 0x00000002, USBSTOR.AddService
+
+[USBSTOR_BULK.NT.Services]
+Addservice = USBSTOR, 0x00000002, USBSTOR.AddService
+
+[USBSTOR.AddService]
+DisplayName    = %USBSTOR.SvcDesc%
+ServiceType    = 1
+StartType      = 3
+ErrorControl   = 1
+ServiceBinary  = %12%\USBSTOR.SYS
+
+
+[USBSTOR.CopyList]
+USBSTOR.SYS
+
+[NTMAP.CopyList]
+NTMAP.SYS
+
+
+[Strings]
+MSFT = "Microsoft"
+MfgName = "Microsoft"
+
+USB\VID_03EE&PID_0000.DeviceDesc = "Mitsumi USB CD-R/RW Drive"
+USB\VID_03EE&PID_6901.DeviceDesc = "Mitsumi USB Floppy"
+USB\VID_03F0&PID_0107.DeviceDesc = "HP USB CD-Writer Plus"
+USB\VID_0409&PID_002C.DeviceDesc = "NEC Clik!-USB Drive"
+USB\VID_04E6&PID_0001.DeviceDesc = "USB ATAPI Storage Device"
+USB\VID_04E6&PID_0101.DeviceDesc = "USB ATAPI Storage Device"
+USB\VID_057B&PID_0000.DeviceDesc = "Y-E Data USB Floppy"
+USB\VID_059B&PID_0001.DeviceDesc = "Iomega USB Zip 100"
+USB\VID_059B&PID_0030.DeviceDesc = "Iomega USB Zip 250"
+USB\VID_059B&PID_0031.DeviceDesc = "Iomega USB Zip 100"
+USB\VID_059F&PID_A601.DeviceDesc = "LaCie USB Hard Drive"
+USB\VID_0644&PID_0000.DeviceDesc = "TEAC USB Floppy"
+USB\VID_0693&PID_0002.DeviceDesc = "USB SmartMedia Reader/Writer"
+USB\VID_0693&PID_0003.DeviceDesc = "USB CompactFlash Reader/Writer"
+USB\VID_0718&PID_0002.DeviceDesc = "Imation SuperDisk USB 120MB"
+USB\VID_0781&PID_0001.DeviceDesc = "SanDisk USB ImageMate"
+
+GenericBulkOnly.DeviceDesc = "USB Mass Storage Device"
+
+USBSTOR.SvcDesc = "USB Mass Storage Driver"

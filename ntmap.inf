@@ -1,0 +1,65 @@
+; Localized	05/11/1999 09:32 PM (GMT)	7:3.0.406 A	ntmap.inf
+
+
+; NTMAP.INF
+;
+;*** Created 10/2/95  (Creation Date)
+
+[Version]
+CatalogFile=ntmap.cat
+signature="$CHICAGO$"
+Class=Storage
+Provider=%Msft%
+LayoutFile=layout.inf, layout1.inf, layout2.inf
+
+[DestinationDirs]
+defaultdestdir=12
+
+; =================== Class Sections ===========================
+
+[ClassInstall]
+Addreg=StorageClassReg
+
+[StorageClassReg]
+HKR,,,,%StorageClassName%
+HKR,,Icon,,-9
+
+; =================== Table of content =========================
+
+[Manufacturer]
+%GenericMfg%=GENERIC
+
+; ======================= FOO ==================================
+
+[GENERIC]
+%GenOpticalDeviceDesc%=NTMap.Dev,GenOptical
+%GenDiskDeviceDesc%=NTMap.Dev,SBP2\GenDisk
+%GenDiskDeviceDesc%=NTMap.Dev,USBSTOR\GenDisk
+%GenCdRomDeviceDesc%=NTMap.Dev,GenCdRom
+
+[NTMap.Dev]
+AddReg=NTMap.AddReg
+CopyFiles=NTMap.CopyFiles
+
+[NTMap.AddReg]
+HKR,,DevLoader,,*IOS
+HKR,,PortDriver,,NTMAPHLP.PDR
+HKR,,PreloadDrivers,,""
+
+[NTMap.CopyFiles]
+ntmaphlp.pdr
+
+; =================== Generic ==================================
+
+[ControlFlags]
+CopyFilesOnly=SBP2\GenDisk
+CopyFilesOnly=GenCdRom
+CopyFilesOnly=GenOptical
+
+[Strings]
+Msft = "Microsoft"
+GenericMfg = "Generic"
+StorageClassName = "Storage device"
+GenDiskDeviceDesc = "1394/USB Disk"
+GenCdRomDeviceDesc = "1394/USB CD-ROM"
+GenOpticalDeviceDesc = "1394/USB Optical Disk"
